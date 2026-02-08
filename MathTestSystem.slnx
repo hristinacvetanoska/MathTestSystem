@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="MathTestSystem.MathProcessor/MathTestSystem.MathProcessor.csproj" />
+  <Project Path="MathTestSystem.UI/MathTestSystem.UI.csproj" />
+  <Project Path="MathTestSystem/MathTestSystem.csproj" />
+</Solution>
