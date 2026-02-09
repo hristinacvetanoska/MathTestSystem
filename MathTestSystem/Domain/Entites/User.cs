@@ -1,7 +1,7 @@
-﻿using MathTestSystem.Domain.Enums;
-
-namespace MathTestSystem.Domain.Entites
+﻿namespace MathTestSystem.Domain.Entites
 {
+    using MathTestSystem.Domain.Enums;
+
     public class User
     {
         public int Id { get; set; }

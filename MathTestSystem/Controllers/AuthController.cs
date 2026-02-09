@@ -1,10 +1,9 @@
-﻿using MathTestSystem.DTOs;
-using MathTestSystem.Infrasturcture.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace MathTestSystem.Controllers
+﻿namespace MathTestSystem.Controllers
 {
+    using MathTestSystem.DTOs;
+    using MathTestSystem.Infrasturcture.Data;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase

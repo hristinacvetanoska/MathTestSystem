@@ -3,7 +3,6 @@
     using MathTestSystem.Domain.Entites;
     using MathTestSystem.Domain.Enums;
     using Microsoft.EntityFrameworkCore;
-    using System;
 
     public class AppDBContext : DbContext
     {
@@ -29,11 +28,11 @@
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ExamTaskResult>()
-                .HasOne(t => t.ExamResult)         // секој task има 1 parent
-                .WithMany(r => r.ExamTasks)        // parent има многу tasks
-                .HasForeignKey(t => t.ExamResultId) // FK property
-                .OnDelete(DeleteBehavior.Cascade);  // cascade delete/save
-                                                    // Seed data for students
+                .HasOne(t => t.ExamResult)         
+                .WithMany(r => r.ExamTasks)        
+                .HasForeignKey(t => t.ExamResultId) 
+                .OnDelete(DeleteBehavior.Cascade);  
+                                                    
             modelBuilder.Entity<Teacher>().HasData(
                 new Teacher { Id = 1, Name = "William", LastName = "Smith" }
             );

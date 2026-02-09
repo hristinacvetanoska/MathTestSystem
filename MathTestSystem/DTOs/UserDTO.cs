@@ -1,6 +1,4 @@
-﻿using MathTestSystem.Domain.Enums;
-
-namespace MathTestSystem.DTOs
+﻿namespace MathTestSystem.DTOs
 {
     public class UserDTO
     {

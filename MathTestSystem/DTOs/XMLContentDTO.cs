@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace MathTestSystem.DTOs
+﻿namespace MathTestSystem.DTOs
 {
     public class XMLContentDTO
     {

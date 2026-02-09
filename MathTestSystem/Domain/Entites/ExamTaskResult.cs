@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MathTestSystem.Domain.Entites
+﻿namespace MathTestSystem.Domain.Entites
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ExamTaskResult
     {
         [Key]

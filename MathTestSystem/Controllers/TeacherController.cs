@@ -1,13 +1,10 @@
-﻿using MathTestSystem.Application.Interfaces;
-using MathTestSystem.DTOs;
-using MathTestSystem.Infrasturcture.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-namespace MathTestSystem.Controllers
+﻿namespace MathTestSystem.Controllers
 {
+    using MathTestSystem.Application.Interfaces;
+    using MathTestSystem.DTOs;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherController : ControllerBase

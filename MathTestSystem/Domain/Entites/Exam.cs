@@ -1,7 +1,7 @@
-﻿using System.Xml.Serialization;
-
-namespace MathTestSystem.Domain.Entites
+﻿namespace MathTestSystem.Domain.Entites
 {
+    using System.Xml.Serialization;
+
     public class Exam
     {
         [XmlAttribute("Id")]

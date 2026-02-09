@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Serialization;
-
-namespace MathTestSystem.Domain.Entites
+﻿namespace MathTestSystem.Domain.Entites
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Xml.Serialization;
+
     public class Student
     {
         [XmlAttribute("ID")]
