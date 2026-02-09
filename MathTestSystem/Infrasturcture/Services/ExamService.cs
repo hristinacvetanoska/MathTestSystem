@@ -2,6 +2,7 @@
 {
     using MathTestSystem.Application.Interfaces;
     using MathTestSystem.Domain.Entites;
+    using MathTestSystem.DTOs;
     using MathTestSystem.Infrasturcture.Data;
     using MathTestSystem.MathProcessor;
     using Microsoft.EntityFrameworkCore;
@@ -19,10 +20,6 @@
 
         public async Task<Dictionary<int, ExamResult>> ReadXMLContent(string xmlContent)
         {
-            await context.ExamTaskResults.ExecuteDeleteAsync();
-            await context.ExamResults.ExecuteDeleteAsync();
-            //var examResult = new ExamResult();
-            //var listResults = new List<ExamResult>();
             var examResultByStudent = new Dictionary<int, ExamResult>();
             XmlSerializer serializer = new XmlSerializer(typeof(Teacher));
             StringReader reader = new StringReader(xmlContent.Trim());
@@ -66,6 +63,26 @@
             examResult.CorrectTasks = exam.MathTasks.Count(t => t.IsCorrect);
             examResult.Score = exam.MathTasks.Count(t => t.IsCorrect) * 100.0 / exam.MathTasks.Count;
             return examResult;
+        }
+
+        public async Task<List<ExamResultDto>> GetExamResultByStudent(int studentId)
+        {
+            var examResults = await this.context.ExamResults
+                .Include(x => x.ExamTasks)
+                .Where(x => x.StudentId == studentId).ToListAsync();
+
+            return examResults.Select(x => new ExamResultDto
+            {
+                StudentId = x.StudentId,
+                TeacherId = x.TeacherId,
+                ExamId = x.ExamId,
+                Score = x.Score,
+                ExamTasks = x.ExamTasks.Select(t => new ExamTaskResultDto
+                {
+                    TaskId = t.TaskId,
+                    IsCorrect = t.IsCorrect,
+                }).ToList()
+            }).ToList();
         }
     }
 }

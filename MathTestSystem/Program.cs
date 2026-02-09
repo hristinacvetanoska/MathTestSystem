@@ -12,12 +12,7 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 
 builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IMathService, MathService>();
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-    options.JsonSerializerOptions.WriteIndented = true;
-});
+builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
 

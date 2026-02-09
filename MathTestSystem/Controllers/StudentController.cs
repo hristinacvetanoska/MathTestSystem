@@ -14,5 +14,16 @@ namespace MathTestSystem.Controllers
         {
             this.examService = examService;
         }
+
+        [HttpGet("exam-results/{studentId}")]
+        public async Task<ActionResult<List<ExamResultDto>>> GetExamResultsByStudentId(int studentId)
+        {
+            var result = await this.examService.GetExamResultByStudent(studentId);
+            if (result == null || !result.Any()) 
+            {
+                return NotFound("There is no exam results for this student.");
+            }
+            return Ok(result);
+        }
     }
 }
