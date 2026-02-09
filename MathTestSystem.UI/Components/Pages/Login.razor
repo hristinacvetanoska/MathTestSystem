@@ -46,10 +46,10 @@
                 return;
             }
 
-            var user = await response.Content.ReadFromJsonAsync<LoggedUserDTO>();
-            Auth.Login(user);
+            var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
+            Auth.Login(loginResponse.UserName, loginResponse.Roles, loginResponse.Token, loginResponse.ProfileId);
 
-            if (user.Role == "Student")
+            if (loginResponse.Roles.Contains("Student"))
                 Nav.NavigateTo("/student/results");
             else
                 Nav.NavigateTo("/teacher/upload");

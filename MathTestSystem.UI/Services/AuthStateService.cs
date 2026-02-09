@@ -3,18 +3,30 @@
     using MathTestSystem.UI.DTOs;
     public class AuthStateService
     {
-        public LoggedUserDTO? CurrentUser { get; private set; }
+        public string UserName { get; private set; }
+        public string[] Roles { get; private set; }
+        public string Token { get; private set; }
+        public int ProfileId { get; private set; }
 
-        public bool IsAuthenticated => CurrentUser != null;
+        public bool IsAuthenticated { get; private set; } = false;
 
-        public void Login(LoggedUserDTO user)
+        public void Login(string username, string[] roles, string token, int profileId)
         {
-            CurrentUser = user;
+            UserName = username;
+            Roles = roles;
+            Token = token;
+            ProfileId = profileId;
+            IsAuthenticated = true;
         }
 
         public void Logout()
         {
-            CurrentUser = null;
+            UserName = null;
+            Roles = null;
+            Token = null;
+            ProfileId = 0;
+            IsAuthenticated=false;
         }
     }
+
 }

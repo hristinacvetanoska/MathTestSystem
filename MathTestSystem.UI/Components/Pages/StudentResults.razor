@@ -6,7 +6,7 @@
 @inject NavigationManager NavManager
 @inject ReviewExamState ReviewExamState
 
-@if (!Auth.IsAuthenticated || Auth.CurrentUser.Role != "Student")
+@if (!Auth.IsAuthenticated || !Auth.Roles.Contains("Student"))
 {
     <p>Access denied</p>
 }
@@ -14,7 +14,7 @@ else
 {
     <h3>My Exam Results</h3>
 
-    <p>Student Id: @Auth.CurrentUser.Id</p>
+    <p>Student Id: @Auth.ProfileId</p>
 
     @if (examResults == null)
     {
@@ -61,12 +61,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        if (Auth.IsAuthenticated && Auth.CurrentUser.Role == "Student")
+        if (Auth.IsAuthenticated && Auth.Roles.Contains("Student"))
         {
             try
             {
                 examResults = await Http.GetFromJsonAsync<List<ExamResultDTO>>(
-                    $"api/student/exam-results/{Auth.CurrentUser.Id}");
+                    $"api/student/exam-results/{Auth.ProfileId}");
             }
             catch (Exception ex)
             {

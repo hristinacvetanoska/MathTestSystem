@@ -1,37 +1,49 @@
-﻿namespace MathTestSystem.Controllers
+﻿using MathTestSystem.Domain.Entities;
+using MathTestSystem.DTOs;
+using MathTestSystem.Infrasturcture.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
+[ApiController]
+[Route("api/[controller]")]
+public class AuthController : ControllerBase
 {
-    using MathTestSystem.DTOs;
-    using MathTestSystem.Infrasturcture.Data;
-    using Microsoft.AspNetCore.Mvc;
+    private readonly UserManager<ApplicationUser> userManager;
+    private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly JwtTokenService jwtTokenService;
 
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    public AuthController(
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager, JwtTokenService jwtTokenService)
     {
-        private readonly AppDBContext _context;
+        this.userManager = userManager;
+        this.signInManager = signInManager;
+        this.jwtTokenService = jwtTokenService;
+    }
 
-        public AuthController(AppDBContext context)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDTO)
+    {
+        var user = await this.userManager.FindByNameAsync(loginRequestDTO.Username);
+        if (user == null)
+            return Unauthorized("Invalid credentials");
+
+        var result = await this.signInManager.CheckPasswordSignInAsync(
+            user, loginRequestDTO.Password, false);
+
+        if (!result.Succeeded)
+            return Unauthorized("Invalid credentials");
+
+        var roles = await this.userManager.GetRolesAsync(user);
+        var token = jwtTokenService.GenerateToken(user, roles);
+
+        return Ok(new
         {
-            _context = context;
-        }
-
-        [HttpPost("login")]
-        public IActionResult Login(LoginRequestDTO request)
-        {
-            var user = _context.Users
-                .FirstOrDefault(u =>
-                    u.Username == request.Username &&
-                    u.Password == request.Password);
-
-            if (user == null)
-                return Unauthorized("Invalid username or password");
-
-            return Ok(new UserDTO
-            {
-                Id = user.ProfileId,
-                Username = user.Username,
-                Role = user.Role.ToString()
-            });
-        }
+            user.Id,
+            user.UserName,
+            Roles = roles,
+            user.ProfileId,
+            Token = token,
+        });
     }
 }

@@ -7,7 +7,7 @@
 
 <h3>Review Exam</h3>
 
-@if (!Auth.IsAuthenticated || Auth.CurrentUser.Role != "Student")
+@if (!Auth.IsAuthenticated || !Auth.Roles.Contains("Student"))
 {
     <p>Access denied</p>
 }

@@ -3,7 +3,7 @@
 @using MathTestSystem.UI.Services
 @inject AuthStateService Auth
 @inject HttpClient Http
-@if (!Auth.IsAuthenticated || Auth.CurrentUser.Role != "Teacher")
+@if (!Auth.IsAuthenticated || !Auth.Roles.Contains("Teacher"))
 {
     <p>Access denied</p>
 }

@@ -1,21 +1,24 @@
 ﻿@using MathTestSystem.UI.Services
 @inject AuthStateService Auth
+@inject NavigationManager Nav
 
 @if (Auth.IsAuthenticated)
 {
-    <p>Hello, @Auth.CurrentUser!.Username</p>
+    <p>Hello, @Auth.UserName</p>
 
-    @if (Auth.CurrentUser.Role == "Student")
+    @if (Auth.Roles.Contains("Student"))
     {
         <NavLink href="/student/results">My Results</NavLink>
     }
 
-    @if (Auth.CurrentUser.Role == "Teacher")
+    @if (Auth.Roles.Contains("Teacher"))
     {
         <NavLink href="/teacher/upload">Upload Exam</NavLink>
     }
 }
 else
 {
-    <NavLink href="/login">Login</NavLink>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="/login">Login/Logout</NavLink>
+    </li>
 }
