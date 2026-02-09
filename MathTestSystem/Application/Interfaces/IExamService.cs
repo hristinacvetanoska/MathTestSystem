@@ -7,6 +7,7 @@
     {
         Task<Dictionary<int, ExamResult>> ReadXMLContent(string xmlContent);
         Task<ExamResult> ProcessExam(Exam exam, int studentId, int teacherId);
-        Task<List<ExamResultDto>> GetExamResultByStudent(int studentId);
+        Task<List<ExamResultDTO>> GetExamResultByStudent(int studentId);
+        Task<List<StudentWithResultsDTO>> GetExamResultsForAllStudents();
     }
 }

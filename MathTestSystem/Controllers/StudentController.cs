@@ -16,7 +16,7 @@ namespace MathTestSystem.Controllers
         }
 
         [HttpGet("exam-results/{studentId}")]
-        public async Task<ActionResult<List<ExamResultDto>>> GetExamResultsByStudentId(int studentId)
+        public async Task<ActionResult<List<ExamResultDTO>>> GetExamResultsByStudentId(int studentId)
         {
             var result = await this.examService.GetExamResultByStudent(studentId);
             if (result == null || !result.Any()) 

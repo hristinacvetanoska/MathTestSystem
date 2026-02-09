@@ -18,6 +18,6 @@ namespace MathTestSystem.Domain.Entites
 
         [XmlElement("Exam")]
         public Exam Exam { get; set; }
-        public List<ExamResult> Exams { get; set; } = new List<ExamResult>();
+        public List<ExamResult> ExamResults { get; set; } = new List<ExamResult>();
     }
 }

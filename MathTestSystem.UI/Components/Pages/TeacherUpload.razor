@@ -3,7 +3,6 @@
 @using MathTestSystem.UI.Services
 @inject AuthStateService Auth
 @inject HttpClient Http
-
 @if (!Auth.IsAuthenticated || Auth.CurrentUser.Role != "Teacher")
 {
     <p>Access denied</p>
@@ -18,17 +17,71 @@ else
     {
         <p>@message</p>
     }
-}
 
+    <h3>Students & Results</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student Id</th>
+                <th>Name</th>
+                <th>Exam Results</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (students != null)
+            {
+                @foreach (var student in students)
+                {
+                    <tr>
+                        <td>@student.Id</td>
+                        <td>@student.Name</td>
+                        <td>
+                            @if (student.Results != null && student.Results.Any())
+                            {
+                                <ul>
+                                    @foreach (var result in student.Results)
+                                    {
+                                        <li>Exam @result.ExamId: Score = @result.Score%</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span>No results yet</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
 @code {
     private string message;
+    private List<StudentWithResultsDTO> students;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStudents();
+    }
+
+    private async Task LoadStudents()
+    {
+        try
+        {
+            students = await Http.GetFromJsonAsync<List<StudentWithResultsDTO>>("api/teacher/students");
+        }
+        catch (Exception ex)
+        {
+            message = $"Failed to load students: {ex.Message}";
+        }
+    }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
         try
         {
             var file = e.File;
-
             using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
             using var reader = new StreamReader(stream);
             var xmlContent = await reader.ReadToEndAsync();
@@ -38,6 +91,7 @@ else
             if (response.IsSuccessStatusCode)
             {
                 message = "File uploaded and processed successfully!";
+                await LoadStudents(); // refresh student results
             }
             else
             {

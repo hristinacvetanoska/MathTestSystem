@@ -65,13 +65,13 @@
             return examResult;
         }
 
-        public async Task<List<ExamResultDto>> GetExamResultByStudent(int studentId)
+        public async Task<List<ExamResultDTO>> GetExamResultByStudent(int studentId)
         {
             var examResults = await this.context.ExamResults
                 .Include(x => x.ExamTasks)
                 .Where(x => x.StudentId == studentId).ToListAsync();
 
-            return examResults.Select(x => new ExamResultDto
+            return examResults.Select(x => new ExamResultDTO
             {
                 StudentId = x.StudentId,
                 TeacherId = x.TeacherId,
@@ -83,6 +83,24 @@
                 {
                     TaskId = t.TaskId,
                     IsCorrect = t.IsCorrect,
+                }).ToList()
+            }).ToList();
+        }
+
+        public async Task<List<StudentWithResultsDTO>> GetExamResultsForAllStudents()
+        {
+            var students = await this.context.Students
+                                            .Include(s => s.ExamResults)
+                                            .ToListAsync();
+
+            return students.Select(s => new StudentWithResultsDTO
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Results = s.ExamResults.Select(er => new ExamResultDTO
+                {
+                    ExamId = er.ExamId,
+                    Score = er.Score
                 }).ToList()
             }).ToList();
         }

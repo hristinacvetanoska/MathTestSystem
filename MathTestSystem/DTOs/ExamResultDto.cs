@@ -1,6 +1,6 @@
 ﻿namespace MathTestSystem.DTOs
 {
-    public class ExamResultDto
+    public class ExamResultDTO
     {
         public int StudentId { get; set; }
         public int TeacherId { get; set; }

@@ -4,6 +4,7 @@ using MathTestSystem.Infrasturcture.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MathTestSystem.Controllers
 {
@@ -22,7 +23,7 @@ namespace MathTestSystem.Controllers
         public async Task<IActionResult> UploadExam([FromBody] XMLContentDTO xmlContent)
         {
             var result = await this.examService.ReadXMLContent(xmlContent.XMLContent);
-            var dtoResults = result.Values.Select(er => new ExamResultDto
+            var dtoResults = result.Values.Select(er => new ExamResultDTO
             {
                 StudentId = er.StudentId,
                 TeacherId = er.TeacherId,
@@ -36,5 +37,12 @@ namespace MathTestSystem.Controllers
 
             return Ok(dtoResults);
         }
+
+        [HttpGet("students")]
+        public async Task<List<StudentWithResultsDTO>> GetStudents()
+        {
+            return await this.examService.GetExamResultsForAllStudents();
+        }
+
     }
 }
