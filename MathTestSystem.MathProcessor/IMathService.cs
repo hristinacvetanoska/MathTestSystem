@@ -2,7 +2,7 @@
 {
     public interface IMathService
     {
-        bool CheckAnswer(double actualResult, double expectedResult);
+        bool CheckAnswer(double correctResult , double studentResult);
         double Evaluate(string formula);
     }
 }

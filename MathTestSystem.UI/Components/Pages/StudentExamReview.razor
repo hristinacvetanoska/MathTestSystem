@@ -1,0 +1,58 @@
+﻿@page "/student/review"
+@using MathTestSystem.UI.Services
+@inject ReviewExamState ReviewExamState
+@inject NavigationManager NavManager
+@inject AuthStateService Auth
+@rendermode InteractiveServer
+
+<h3>Review Exam</h3>
+
+@if (!Auth.IsAuthenticated || Auth.CurrentUser.Role != "Student")
+{
+    <p>Access denied</p>
+}
+else if (ReviewExamState.CurrentExam == null)
+{
+    <p>No exam selected.</p>
+    <button class="btn btn-secondary" @onclick="GoBack">Back to Results</button>
+}
+else
+{
+    <p><strong>Exam Id:</strong> @ReviewExamState.CurrentExam.ExamId</p>
+    <p><strong>Total Tasks:</strong> @ReviewExamState.CurrentExam.TotalTasks</p>
+    <p><strong>Correct Tasks:</strong> @ReviewExamState.CurrentExam.CorrectTasks</p>
+    <p><strong>Score:</strong> @ReviewExamState.CurrentExam.Score</p>
+
+    <h4>Tasks:</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Task Id</th>
+                <th>Formula</th>
+                <th>Your Answer</th>
+                <th>Correct Answer</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in ReviewExamState.CurrentExam.ExamTasks)
+            {
+                <tr class="@(task.IsCorrect ? "table-success" : "table-danger")">
+                    <td>@task.TaskId</td>
+                    <td>@task.Formula</td>
+                    <td>@task.StudentAnswer</td>
+                    <td>@task.CorrectAnswer</td>
+                    <td>@(task.IsCorrect ? "Correct" : "Incorrect")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button class="btn btn-secondary" @onclick="GoBack">Back to Results</button>
+}
+@code {
+    private void GoBack()
+    {
+        NavManager.NavigateTo("/student/results");
+    }
+}

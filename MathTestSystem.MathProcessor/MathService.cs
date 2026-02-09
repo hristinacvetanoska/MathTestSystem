@@ -4,9 +4,9 @@
 
     public class MathService : IMathService
     {
-        public bool CheckAnswer(double actualResult, double expectedResult)
+        public bool CheckAnswer(double correctResult, double studentResult)
         {
-            return actualResult == expectedResult ? true : false;
+            return studentResult == correctResult ? true : false;
         }
 
         public double Evaluate(string formula)

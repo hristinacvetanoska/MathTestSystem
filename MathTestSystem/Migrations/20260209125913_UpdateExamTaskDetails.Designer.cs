@@ -2,6 +2,7 @@
 using MathTestSystem.Infrasturcture.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MathTestSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260209125913_UpdateExamTaskDetails")]
+    partial class UpdateExamTaskDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
@@ -112,11 +115,14 @@ namespace MathTestSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("CorrectAnswer")
+                    b.Property<double>("ActualResult")
                         .HasColumnType("REAL");
 
                     b.Property<int?>("ExamId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("ExpectedResult")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("Formula")
                         .IsRequired()
@@ -124,9 +130,6 @@ namespace MathTestSystem.Migrations
 
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("INTEGER");
-
-                    b.Property<double>("StudentAnwer")
-                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 

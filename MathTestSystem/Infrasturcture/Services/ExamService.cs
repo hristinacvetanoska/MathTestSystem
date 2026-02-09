@@ -47,14 +47,17 @@
             foreach (var task in exam.MathTasks)
             {
                 var mathOperation = task.Formula.Split("=");
-                task.ExpectedResult = Convert.ToDouble(mathOperation[1].Trim());
-                task.ActualResult = this.mathService.Evaluate(mathOperation[0].Trim());
-                task.IsCorrect = this.mathService.CheckAnswer(task.ActualResult, task.ExpectedResult);
+                task.StudentAnwer = Convert.ToDouble(mathOperation[1].Trim());
+                task.CorrectAnswer = this.mathService.Evaluate(mathOperation[0].Trim());
+                task.IsCorrect = this.mathService.CheckAnswer(task.CorrectAnswer, task.StudentAnwer);
 
                 var taskResult = new ExamTaskResult
                 {
                     TaskId = task.Id,
                     IsCorrect = task.IsCorrect,
+                    CorrectAnswer = task.CorrectAnswer.ToString(),
+                    StudentAnswer = task.StudentAnwer.ToString(),
+                    Formula = task.Formula,
                     ExamResult = examResult
                 };
                 examResult.ExamTasks.Add(taskResult);
@@ -83,6 +86,9 @@
                 {
                     TaskId = t.TaskId,
                     IsCorrect = t.IsCorrect,
+                    StudentAnswer = t.StudentAnswer,
+                    Formula = t.Formula,
+                    CorrectAnswer = t.CorrectAnswer,
                 }).ToList()
             }).ToList();
         }

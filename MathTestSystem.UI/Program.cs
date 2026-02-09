@@ -7,6 +7,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddScoped<AuthStateService>();
+builder.Services.AddScoped<ReviewExamState>();
 
 builder.Services.AddScoped(sp =>
     new HttpClient { BaseAddress = new Uri("https://localhost:7190/") });

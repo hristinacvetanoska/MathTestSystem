@@ -3,6 +3,8 @@
 @using MathTestSystem.UI.DTOs
 @inject AuthStateService Auth
 @inject HttpClient Http
+@inject NavigationManager NavManager
+@inject ReviewExamState ReviewExamState
 
 @if (!Auth.IsAuthenticated || Auth.CurrentUser.Role != "Student")
 {
@@ -31,6 +33,9 @@ else
                     <th>Total Tasks</th>
                     <th>Correct Tasks</th>
                     <th>Score</th>
+                    <th>
+                        Review
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +46,9 @@ else
                         <td>@result.TotalTasks</td>
                         <td>@result.CorrectTasks</td>
                         <td>@result.Score</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" @onclick="() => ReviewExam(result)">Review</button>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -65,5 +73,10 @@ else
                 Console.WriteLine($"Failed to load exam results: {ex.Message}");
             }
         }
+    }
+    private void ReviewExam(ExamResultDTO result)
+    {
+        ReviewExamState.CurrentExam = result;
+        NavManager.NavigateTo("/student/review");
     }
 }
