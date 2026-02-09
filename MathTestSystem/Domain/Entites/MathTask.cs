@@ -1,11 +1,16 @@
-﻿namespace MathTestSystem.Domain.Entites
+﻿using System.Xml.Serialization;
+
+namespace MathTestSystem.Domain.Entites
 {
     public class MathTask
     {
+        [XmlAttribute("id")]
         public int Id { get; set; }
-        public string MathOperation { get; set; }
-        public string ExpectedResult { get; set; }
-        public string ActualResult { get; set; }
+
+        [XmlText]
+        public string Formula { get; set; }
+        public double ExpectedResult { get; set; }
+        public double ActualResult { get; set; }
         public bool IsCorrect { get; set; }
     }
 }

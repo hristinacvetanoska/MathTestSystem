@@ -7,20 +7,21 @@
     {
         public static List<User> GetUsers() => new List<User>
     {
-        new User { Id= new Guid(), Username="williamTeacher", Password="123", Role=UserRole.Teacher, ReferenceId= 1 },
-        new User { Id= new Guid(), Username="anaStudent", Password="123", Role=UserRole.Student, ReferenceId= 1 },
-        new User { Id=new Guid(), Username="johnStudent", Password="123", Role=UserRole.Student, ReferenceId= 2 }
+        new User { Id= 123, Username="williamTeacher", Password="123", Role=UserRole.Teacher, ProfileId= 1 },
+        new User { Id= 456, Username="anaStudent", Password="123", Role=UserRole.Student, ProfileId= 1 },
+        new User { Id= 789, Username="johnStudent", Password="123", Role=UserRole.Student, ProfileId= 2 }
     };
 
         public static List<Student> GetStudents() => new List<Student>
     {
-        new Student { Id=1, Name="Ana" },
-        new Student { Id=2, Name="John" }
+        new Student { Id=1, Name="Ana", LastName = "Swift", TeacherId = 1 },
+        new Student { Id=2, Name="John", LastName = "Jolie", TeacherId = 1 }
     };
 
         public static List<Teacher> GetTeachers() => new List<Teacher>
     {
-        new Teacher { Id=1, Name="William" }
+        new Teacher { Id=1, Name="William", LastName = "Gomez"}
     };
     }
+
 }
