@@ -2,8 +2,8 @@
 
 namespace MathTestSystem.DTOs
 {
-    public class XMLContent
+    public class XMLContentDTO
     {
-        public string XMLContentValue { get; set; }
+        public string XMLContent { get; set; }
     }
 }

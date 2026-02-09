@@ -1,0 +1,64 @@
+﻿@page "/login"
+
+@using MathTestSystem.UI.DTOs
+@using MathTestSystem.UI.Services
+@inject HttpClient Http
+@inject AuthStateService Auth
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+
+<h3>Login</h3>
+
+<div>
+    <input placeholder="Username" @bind="username" />
+</div>
+<div>
+    <input type="password" placeholder="Password" @bind="password" />
+</div>
+
+<button type="button" @onclick="LoginForm">LoginButton</button>
+
+@if (!string.IsNullOrEmpty(error))
+{
+    <p style="color:red">@error</p>
+}
+
+@code {
+    string username;
+    string password;
+    string error;
+
+    async Task LoginForm()
+    {
+        try
+        {
+            Console.WriteLine("Clicked!");
+            await Task.Delay(100);
+            var loginRequest = new LoginRequestDTO
+            {
+                Username = username,
+                Password = password
+            };
+            var response = await Http.PostAsJsonAsync(
+                "api/auth/login", loginRequest);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                error = "Invalid credentials";
+                return;
+            }
+
+            var user = await response.Content.ReadFromJsonAsync<LoggedUserDTO>();
+            Auth.Login(user);
+
+            if (user.Role == "Student")
+                Nav.NavigateTo("/student/results");
+            else
+                Nav.NavigateTo("/teacher/upload");
+        }
+        catch (Exception ex)
+        {
+            error = $"Login failed: {ex.Message}";
+        }
+    }
+}

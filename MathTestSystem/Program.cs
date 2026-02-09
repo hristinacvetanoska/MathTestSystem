@@ -13,7 +13,14 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IMathService, MathService>();
 builder.Services.AddControllers();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMathTestSysteUI",
+        builder => builder
+            .WithOrigins("https://localhost:7299")
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -24,6 +31,7 @@ var app = builder.Build();
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     });
 
+app.UseCors("AllowMathTestSysteUI");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

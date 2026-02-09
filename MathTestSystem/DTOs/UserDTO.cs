@@ -1,0 +1,12 @@
+﻿using MathTestSystem.Domain.Enums;
+
+namespace MathTestSystem.DTOs
+{
+    public class UserDTO
+    {
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Role { get; set; }
+    }
+}

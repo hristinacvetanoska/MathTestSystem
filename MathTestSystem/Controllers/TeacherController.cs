@@ -18,10 +18,10 @@ namespace MathTestSystem.Controllers
             this.examService = examService;
         }
 
-        [HttpPost("UploadXMLDocument")]
-        public async Task<IActionResult> UploadExam([FromBody] XMLContent xmlContent)
+        [HttpPost("upload-xml-document")]
+        public async Task<IActionResult> UploadExam([FromBody] XMLContentDTO xmlContent)
         {
-            var result = await this.examService.ReadXMLContent(xmlContent.XMLContentValue);
+            var result = await this.examService.ReadXMLContent(xmlContent.XMLContent);
             var dtoResults = result.Values.Select(er => new ExamResultDto
             {
                 StudentId = er.StudentId,

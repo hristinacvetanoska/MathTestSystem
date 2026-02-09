@@ -1,0 +1,69 @@
+﻿@page "/student/results"
+@using MathTestSystem.UI.Services
+@using MathTestSystem.UI.DTOs
+@inject AuthStateService Auth
+@inject HttpClient Http
+
+@if (!Auth.IsAuthenticated || Auth.CurrentUser.Role != "Student")
+{
+    <p>Access denied</p>
+}
+else
+{
+    <h3>My Exam Results</h3>
+
+    <p>Student Id: @Auth.CurrentUser.Id</p>
+
+    @if (examResults == null)
+    {
+        <p>Loading...</p>
+    }
+    else if (examResults.Count == 0)
+    {
+        <p>No exam results found.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Exam Id</th>
+                    <th>Total Tasks</th>
+                    <th>Correct Tasks</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in examResults)
+                {
+                    <tr>
+                        <td>@result.ExamId</td>
+                        <td>@result.TotalTasks</td>
+                        <td>@result.CorrectTasks</td>
+                        <td>@result.Score</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private List<ExamResultDTO> examResults;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Auth.IsAuthenticated && Auth.CurrentUser.Role == "Student")
+        {
+            try
+            {
+                examResults = await Http.GetFromJsonAsync<List<ExamResultDTO>>(
+                    $"api/student/exam-results/{Auth.CurrentUser.Id}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load exam results: {ex.Message}");
+            }
+        }
+    }
+}

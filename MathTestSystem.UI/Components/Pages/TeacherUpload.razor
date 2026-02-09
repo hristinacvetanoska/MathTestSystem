@@ -1,0 +1,52 @@
+﻿@page "/teacher/upload"
+@using MathTestSystem.UI.DTOs
+@using MathTestSystem.UI.Services
+@inject AuthStateService Auth
+@inject HttpClient Http
+
+@if (!Auth.IsAuthenticated || Auth.CurrentUser.Role != "Teacher")
+{
+    <p>Access denied</p>
+}
+else
+{
+    <h3>Upload Exam XML</h3>
+
+    <InputFile OnChange="HandleFileSelected" />
+
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <p>@message</p>
+    }
+}
+
+@code {
+    private string message;
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            var file = e.File;
+
+            using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+            using var reader = new StreamReader(stream);
+            var xmlContent = await reader.ReadToEndAsync();
+
+            var response = await Http.PostAsJsonAsync("api/teacher/upload-xml-document", new XMLContentDTO { XMLContent = xmlContent });
+
+            if (response.IsSuccessStatusCode)
+            {
+                message = "File uploaded and processed successfully!";
+            }
+            else
+            {
+                message = $"Upload failed: {response.ReasonPhrase}";
+            }
+        }
+        catch (Exception ex)
+        {
+            message = $"Error: {ex.Message}";
+        }
+    }
+}

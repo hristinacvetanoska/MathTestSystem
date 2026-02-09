@@ -77,6 +77,8 @@
                 TeacherId = x.TeacherId,
                 ExamId = x.ExamId,
                 Score = x.Score,
+                TotalTasks = x.TotalTasks,
+                CorrectTasks = x.CorrectTasks,
                 ExamTasks = x.ExamTasks.Select(t => new ExamTaskResultDto
                 {
                     TaskId = t.TaskId,
