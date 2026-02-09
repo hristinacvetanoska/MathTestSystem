@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="MathTestSystem.MathProcessor.UnitTests/MathTestSystem.MathProcessor.UnitTests.csproj" Id="722f20fc-9c6e-4c1e-b30a-4c9ae75c0bac" />
   <Project Path="MathTestSystem.MathProcessor/MathTestSystem.MathProcessor.csproj" />
   <Project Path="MathTestSystem.UI/MathTestSystem.UI.csproj" />
   <Project Path="MathTestSystem/MathTestSystem.csproj" />
