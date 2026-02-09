@@ -89,9 +89,3 @@ MathTestSystem is a full-stack web application for uploading, and reviewing math
    * Teacher: `williamTeacher` / `Teacher123!`
    * Student: `anaStudent` / `AnaStudent123!`
    * Student: `johnStudent` / `JohnStudent123!`
-
-## Notes
-
-* JWT tokens are used for securing API endpoints.
-* All exam processing is done automatically on the server when a student takes an exam.
-* NavMenu dynamically updates based on the user's authentication state and role.
