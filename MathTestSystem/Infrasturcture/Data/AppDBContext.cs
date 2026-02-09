@@ -2,7 +2,6 @@
 {
     using MathTestSystem.Domain.Entites;
     using MathTestSystem.Domain.Entities;
-    using MathTestSystem.Domain.Enums;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;

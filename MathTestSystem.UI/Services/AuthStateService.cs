@@ -1,6 +1,5 @@
 ﻿namespace MathTestSystem.UI.Services
 {
-    using MathTestSystem.UI.DTOs;
     public class AuthStateService
     {
         public string UserName { get; private set; }
